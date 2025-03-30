@@ -27,6 +27,10 @@ function _create (dependencies = {}) {
     if(!/\w+\s->/.test(command)) {
       return 
     }
+
+    if(!/\w+\s->\s\w+/.test(command)) {
+      return 
+    }
     
     storer.store(command)
 

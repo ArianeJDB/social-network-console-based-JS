@@ -35,8 +35,9 @@ test('Stores message posted when command is in correct format', () => {
 
 test.each([
   ["without arrow", "user message"],
-  ["without user before the arrow", "-> message"]
-])('Does not store message when command %s', (_, command) => {
+  ["without user before the arrow", "-> message"],
+  ["without message after the arrow", "user ->"]
+])('Does not store message when command is %s', (_, command) => {
     when(readlineMock.createInterface().question)
     .calledWith(">", expect.anything())
     .mockReturnValue(command)
