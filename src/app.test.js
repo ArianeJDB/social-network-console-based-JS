@@ -7,7 +7,7 @@ const readlineMock = {
       close: jest.fn()
     })
 }
-
+ 
 const consolelogMock = jest.fn();
 
 const runner = App.create({readlineMock, consolelog: consolelogMock})

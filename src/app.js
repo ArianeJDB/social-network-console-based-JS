@@ -9,7 +9,7 @@ module.exports = {
 function _create (dependencies = {}) {
   const {
     readlineMock = readline,
-    consolelog = console.log()
+    consolelog = console.log
    } = dependencies
 
   const rl = readlineMock.createInterface({
@@ -27,6 +27,7 @@ function _create (dependencies = {}) {
   }
   
   rl.question("> ", processCommand);
+  rl.close();
   
   return { 
     processCommand
