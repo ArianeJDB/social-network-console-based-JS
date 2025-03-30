@@ -24,7 +24,7 @@ function _create (dependencies = {}) {
       return
     }
 
-    if(!/\w+\s->/.test(command)) {
+    if(!isUserPresentBeforeArrow) {
       return 
     }
 
@@ -35,6 +35,10 @@ function _create (dependencies = {}) {
     storer.store(command)
 
     rl.question("> ", processCommand);
+  }
+
+  function isUserPresentBeforeArrow(command) {
+    return /\w+\s->/.test(command)
   }
   
   rl.question("> ", processCommand);
