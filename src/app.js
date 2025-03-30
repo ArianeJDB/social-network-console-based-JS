@@ -23,6 +23,11 @@ function _create (dependencies = {}) {
     if (!command.includes("->")) {
       return
     }
+
+    if(!/\w+\s->/.test(command)) {
+      return 
+    }
+    
     storer.store(command)
 
     rl.question("> ", processCommand);

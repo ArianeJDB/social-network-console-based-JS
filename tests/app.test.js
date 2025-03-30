@@ -33,8 +33,10 @@ test('Stores message posted when command is in correct format', () => {
 
 })
 
-test('Does not store message when command does not contain an arrow', () => {
-  const command = "user message"
+test.each([
+  ["without arrow", "user message"],
+  ["without user before the arrow", "-> message"]
+])('Does not store message when command %s', (_, command) => {
     when(readlineMock.createInterface().question)
     .calledWith(">", expect.anything())
     .mockReturnValue(command)
