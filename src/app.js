@@ -1,5 +1,5 @@
-const readline = require("readline");
-
+const readline = require("readline")
+const { Storer } = require('./Storer')
 
 module.exports = {
   App: {
@@ -9,7 +9,8 @@ module.exports = {
 function _create (dependencies = {}) {
   const {
     readlineMock = readline,
-    consolelog = console.log
+    consolelog = console.log,
+    storer = Storer.create()
    } = dependencies
 
   const rl = readlineMock.createInterface({
@@ -19,15 +20,12 @@ function _create (dependencies = {}) {
   
   
   function processCommand(command) {
-    if(command === "hola") {
-      consolelog(command)
-    }
-  
+    storer.store(command)
+    
     rl.question("> ", processCommand);
   }
   
   rl.question("> ", processCommand);
-  rl.close();
   
   return { 
     processCommand
