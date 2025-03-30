@@ -10,26 +10,32 @@ const readlineMock = {
  
 const consolelogMock = jest.fn()
 const storer = { store: jest.fn() }
+const getCurrentTimestampMock = jest.fn();
 
 const runner = App.create({
   readlineMock,
   consolelog: consolelogMock,
-  storer
+  storer,
+  getCurrentTimestamp: getCurrentTimestampMock
 })
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-test('Stores message posted when command is in correct format', () => {
+test('Stores message posted with timestamp when command is in correct format', () => {
   const command = "user -> message"
+  const timestamp = 1234567890
     when(readlineMock.createInterface().question)
     .calledWith(">", expect.anything())
     .mockReturnValue(command)
-    
+    when(getCurrentTimestampMock)
+    .calledWith()
+    .mockReturnValue(timestamp);
+
     runner.processCommand(command)
 
-    expect(storer.store).toHaveBeenCalledWith(command)
+    expect(storer.store).toHaveBeenCalledWith(command, timestamp)
 
 })
 

@@ -10,7 +10,8 @@ function _create (dependencies = {}) {
   const {
     readlineMock = readline,
     consolelog = console.log,
-    storer = Storer.create()
+    storer = Storer.create(),
+    getCurrentTimestamp = Date.now
    } = dependencies
 
   const rl = readlineMock.createInterface({
@@ -20,6 +21,8 @@ function _create (dependencies = {}) {
   
 
   function processCommand(command) {
+    const timestamp = getCurrentTimestamp();
+
     if (!command.includes("->")) {
       return
     }
@@ -31,8 +34,8 @@ function _create (dependencies = {}) {
     if(!isMessagePresentAfterArrow(command)) {
       return 
     }
-    
-    storer.store(command)
+
+    storer.store(command, timestamp)
 
     rl.question("> ", processCommand);
   }
