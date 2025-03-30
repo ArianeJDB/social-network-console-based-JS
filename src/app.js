@@ -18,10 +18,13 @@ function _create (dependencies = {}) {
     output: process.stdout
   });
   
-  
+
   function processCommand(command) {
+    if (!command.includes("->")) {
+      return
+    }
     storer.store(command)
-    
+
     rl.question("> ", processCommand);
   }
   

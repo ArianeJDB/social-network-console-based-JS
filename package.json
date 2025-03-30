@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "devDependencies": {
     "jest": "^29.7.0",
     "jest-when": "^3.7.0"

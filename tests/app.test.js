@@ -17,8 +17,11 @@ const runner = App.create({
   storer
 })
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
-test('Stores message posted', () => {
+test('Stores message posted when command is in correct format', () => {
   const command = "user -> message"
     when(readlineMock.createInterface().question)
     .calledWith(">", expect.anything())
@@ -27,5 +30,17 @@ test('Stores message posted', () => {
     runner.processCommand(command)
 
     expect(storer.store).toHaveBeenCalledWith(command)
+
+})
+
+test('Does not store message when command does not contain an arrow', () => {
+  const command = "user message"
+    when(readlineMock.createInterface().question)
+    .calledWith(">", expect.anything())
+    .mockReturnValue(command)
+    
+    runner.processCommand(command)
+
+    expect(storer.store).not.toHaveBeenCalled()
 
 })
