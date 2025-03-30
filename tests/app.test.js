@@ -1,4 +1,4 @@
-const { App } = require("../src/app.js");
+const { App } = require("../src/app.js")
 const { when } =  require("jest-when")
 
 const readlineMock = {

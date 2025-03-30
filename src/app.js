@@ -5,7 +5,8 @@ module.exports = {
   App: {
     create: _create
   }
-};
+}
+
 function _create (dependencies = {}) {
   const {
     readlineMock = readline,
