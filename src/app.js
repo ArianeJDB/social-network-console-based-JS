@@ -35,7 +35,9 @@ function _create (dependencies = {}) {
       return 
     }
 
-    storer.store(command, timestamp)
+    const [ user, message ] = command.split(" -> ")
+
+    storer.store({user, message, timestamp})
 
     rl.question("> ", processCommand);
   }

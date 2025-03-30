@@ -23,7 +23,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-test('Stores message posted with timestamp when command is in correct format', () => {
+test('Stores user, message and timestamp when command is in correct format', () => {
   const command = "user -> message"
   const timestamp = 1234567890
     when(readlineMock.createInterface().question)
@@ -35,7 +35,12 @@ test('Stores message posted with timestamp when command is in correct format', (
 
     runner.processCommand(command)
 
-    expect(storer.store).toHaveBeenCalledWith(command, timestamp)
+    expectedPost = {
+      user: "user",
+      message: "message",
+      timestamp
+    }
+    expect(storer.store).toHaveBeenCalledWith(expectedPost)
 
 })
 
