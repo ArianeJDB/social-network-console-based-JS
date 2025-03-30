@@ -24,11 +24,11 @@ function _create (dependencies = {}) {
       return
     }
 
-    if(!isUserPresentBeforeArrow) {
+    if(!isUserPresentBeforeArrow(command)) {
       return 
     }
 
-    if(!/\w+\s->\s\w+/.test(command)) {
+    if(!isMessagePresentAfterArrow(command)) {
       return 
     }
     
@@ -39,6 +39,10 @@ function _create (dependencies = {}) {
 
   function isUserPresentBeforeArrow(command) {
     return /\w+\s->/.test(command)
+  }
+
+  function isMessagePresentAfterArrow(command) {
+    return /\w+\s->\s\w+/.test(command)
   }
   
   rl.question("> ", processCommand);
