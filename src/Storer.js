@@ -12,7 +12,10 @@ function _create (dependencies = {}) {
     } = dependencies
   
   function store({user, message, timestamp}) {
-    return messages[user] = [{message, timestamp}]
+    if (!messages[user]) {
+      messages[user] = [];
+  }
+    messages[user].push({ message, timestamp })
   }
   
   return { 
