@@ -1,4 +1,5 @@
 const globalMessages = require('./globalMessages');
+const { Printer } = require('./Printer')
 
 module.exports = {
     Retriever: {
@@ -8,11 +9,13 @@ module.exports = {
   
   function _create (dependencies = {}) {
     const {
-        messages = globalMessages
+        messages = globalMessages,
+        printer = Printer.create()
     } = dependencies
     
     function get(user) {
-      return messages[user] 
+        printer.print(messages[user])
+        return messages[user] 
 
     }
     
