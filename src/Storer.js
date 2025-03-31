@@ -15,6 +15,6 @@ function _create (dependencies = {}) {
   }
   
   return { 
-    store
+    store, messages
   }
 }
