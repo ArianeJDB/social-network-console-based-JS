@@ -7,10 +7,14 @@ test("Returns messages by user", () => {
     const user = "user"
     const message = "message"
     const timestamp = 1234567890
-    messages[user] = [{message, timestamp}]
+    putMessageByUser({user, message, timestamp})
 
     const result = retriever.get(user)
 
     expect(result).toMatchObject([{message, timestamp}])
 
 })
+
+function putMessageByUser({user, message, timestamp}) {
+    return messages[user] = [{message, timestamp}]
+}
