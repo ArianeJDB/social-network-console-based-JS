@@ -1,4 +1,4 @@
-const { Storer, messages } = require('./Storer');
+const globalMessages = require('./globalMessages');
 
 module.exports = {
     Retriever: {
@@ -8,12 +8,12 @@ module.exports = {
   
   function _create (dependencies = {}) {
     const {
-        messages = {}
+        messages = globalMessages
     } = dependencies
-  
+    
     function get(user) {
       return messages[user] 
-  
+
     }
     
     return { 

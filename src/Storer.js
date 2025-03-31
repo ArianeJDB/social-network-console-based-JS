@@ -1,3 +1,5 @@
+const globalMessages = require('./globalMessages');
+
 module.exports = {
   Storer: {
     create: _create
@@ -6,15 +8,14 @@ module.exports = {
 
 function _create (dependencies = {}) {
     const {
-        messages = {}
+        messages = globalMessages
     } = dependencies
   
   function store({user, message, timestamp}) {
-    messages[user] = [{message, timestamp}]
-
+    return messages[user] = [{message, timestamp}]
   }
   
   return { 
-    store, messages
+    store
   }
 }

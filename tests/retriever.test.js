@@ -1,7 +1,7 @@
 const { Retriever } = require("../src/Retriever")
 
 const messages = {}
-const retriever = Retriever.create({ messages })
+const retriever = Retriever.create({messages})
 
 test("Returns messages by user", () => {
     const user = "user"
