@@ -20,6 +20,10 @@ const followingStorer = {
   store: jest.fn()
 }
 
+const wall = {
+  process: jest.fn()
+}
+
 const consolelogMock = jest.fn()
 const getCurrentTimestampMock = jest.fn();
 
@@ -29,6 +33,7 @@ const runner = App.create({
   storer,
   retriever,
   followingStorer,
+  wall,
   getCurrentTimestamp: getCurrentTimestampMock
 })
 
@@ -108,4 +113,15 @@ test('Stores the following user when command contains "follows"', () => {
   
 })
 
-te
+test("Prints wall when command contains 'wall'", () => {
+  const command = "user wall"
+  when(readlineMock.createInterface().question)
+    .calledWith(">", expect.anything())
+    .mockReturnValue(command)
+
+  runner.processCommand(command)
+
+
+  expect(wall.process).toHaveBeenCalledWith("user")
+
+})
