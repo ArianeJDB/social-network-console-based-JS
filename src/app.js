@@ -27,7 +27,9 @@ function _create (dependencies = {}) {
     const timestamp = getCurrentTimestamp();
 
     if (!command.includes("->") && command.split(' ').length === 1) {
-      return retriever.get(command)
+      retriever.get(command)
+      rl.question("> ", processCommand);
+      return
     }
 
     if(!isUserPresentBeforeArrow(command)) {

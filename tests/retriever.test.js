@@ -33,6 +33,27 @@ test("Prints one message by user", () => {
 
 })
 
+test("Prints more than one message by user", () => {
+    const user = "user"
+    const message = "message"
+    const timestamp = 1234567890
+    const anotherMessage = "anotherMessage"
+    const anotherTimestamp = 1234567896
+
+    putMessageByUser({user, message, timestamp})
+    putMessageByUser({user, message: anotherMessage, timestamp: anotherTimestamp})
+
+
+    retriever.get(user)
+
+    expect(printer.print).toHaveBeenCalledWith(
+        [
+            {message, timestamp},
+            {message: anotherMessage, timestamp: anotherTimestamp}
+        ])
+
+})
+
 test("Does not print messages by user when user does not exist", () => {
     const user = "unkownUser"
 
@@ -43,5 +64,8 @@ test("Does not print messages by user when user does not exist", () => {
 })
 
 function putMessageByUser({user, message, timestamp}) {
-    return messages[user] = [{message, timestamp}]
+    if (!messages[user]) {
+        messages[user] = [];
+    }
+    return messages[user].push({ message, timestamp })
 }
