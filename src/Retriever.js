@@ -14,8 +14,11 @@ module.exports = {
     } = dependencies
     
     function get(user) {
-        printer.print(messages[user])
-        return messages[user] 
+      const userMessages = messages[user];
+      if (userMessages) {
+          printer.print(userMessages);
+      }
+      return userMessages || [];
 
     }
     
