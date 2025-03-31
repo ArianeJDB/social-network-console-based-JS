@@ -12,18 +12,18 @@ module.exports = {
   
     function print(messages) {
         const currentTime = getCurrentTimestamp();
-        const messageTime = messages[0].timestamp;
-        const diffInMs = currentTime - messageTime;
-        const diffInMinutes = Math.floor(diffInMs / (60 * 1000));
-        let text;
-        if (diffInMinutes < 1) {
-          text = "less than a minute ago"
-        } else if (diffInMinutes === 1) {
-          text = `${diffInMinutes} minute ago`
-        } else {
-          text = `${diffInMinutes} minutes ago`
-        }
-        consolelog(`${messages[0].message} (${text})`)
+        messages.forEach(({message, timestamp}) => {
+          const diffInMinutes = Math.floor((currentTime - timestamp) / (60 * 1000));
+          const timeText =
+          diffInMinutes < 1 
+          ? "less than a minute ago" 
+          : diffInMinutes === 1
+          ? "1 minute ago"
+          : `${diffInMinutes} minutes ago`;
+
+          consolelog(`${message} (${timeText})`);
+        })
+
         return messages
 
     }
