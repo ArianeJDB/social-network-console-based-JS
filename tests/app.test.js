@@ -8,14 +8,22 @@ const readlineMock = {
     })
 }
  
+const storer = {
+  store: jest.fn()
+}
+
+const retriever = {
+  get: jest.fn()
+}
+
 const consolelogMock = jest.fn()
-const storer = { store: jest.fn() }
 const getCurrentTimestampMock = jest.fn();
 
 const runner = App.create({
   readlineMock,
   consolelog: consolelogMock,
   storer,
+  retriever,
   getCurrentTimestamp: getCurrentTimestampMock
 })
 
@@ -26,10 +34,10 @@ beforeEach(() => {
 test('Stores user, message and timestamp when command is in correct format', () => {
   const command = "user -> message"
   const timestamp = 1234567890
-    when(readlineMock.createInterface().question)
+  when(readlineMock.createInterface().question)
     .calledWith(">", expect.anything())
     .mockReturnValue(command)
-    when(getCurrentTimestampMock)
+  when(getCurrentTimestampMock)
     .calledWith()
     .mockReturnValue(timestamp);
 
@@ -57,4 +65,16 @@ test.each([
 
     expect(storer.store).not.toHaveBeenCalled()
 
+})
+
+test("Retrieves messages by user when command is only one word (user)", () => {
+  const user = "user"
+  when(readlineMock.createInterface().question)
+    .calledWith(">", expect.anything())
+    .mockReturnValue(user)
+
+    runner.processCommand(user)
+
+    expect(storer.store).not.toHaveBeenCalled()
+    expect(retriever.get).toHaveBeenCalledWith(user)
 })

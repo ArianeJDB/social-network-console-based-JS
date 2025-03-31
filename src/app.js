@@ -1,5 +1,6 @@
 const readline = require("readline")
-const { Storer } = require('./Storer')
+const { Storer } = require('./Storer');
+const { Retriever } = require("./Retriever");
 
 module.exports = {
   App: {
@@ -12,6 +13,7 @@ function _create (dependencies = {}) {
     readlineMock = readline,
     consolelog = console.log,
     storer = Storer.create(),
+    retriever = Retriever.create(),
     getCurrentTimestamp = Date.now
    } = dependencies
 
@@ -24,8 +26,8 @@ function _create (dependencies = {}) {
   function processCommand(command) {
     const timestamp = getCurrentTimestamp();
 
-    if (!command.includes("->")) {
-      return
+    if (!command.includes("->") && command.split(' ').length === 1) {
+      return retriever.get(command)
     }
 
     if(!isUserPresentBeforeArrow(command)) {
