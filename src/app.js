@@ -30,6 +30,8 @@ function _create (dependencies = {}) {
     if (command.includes("follows")) {
       const [user, userToFollow] = command.split(" follows ")
       followingStorer.store(user, userToFollow)
+      rl.question("> ", processCommand);
+      return
     }
 
     if (!command.includes("->") && command.split(' ').length === 1) {

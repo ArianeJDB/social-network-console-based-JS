@@ -95,3 +95,17 @@ test('Stores the following user when command contains "follows"', () => {
     expect(followingStorer.store).toHaveBeenCalledWith("user", "userToFollow")
     
 })
+
+test('Stores the following user when command contains "follows"', () => {
+  const command = "user follows userToFollow"
+  when(readlineMock.createInterface().question)
+    .calledWith(">", expect.anything())
+    .mockReturnValue("user follows userToFollow")
+
+  runner.processCommand(command)
+
+  expect(followingStorer.store).toHaveBeenCalledWith("user", "userToFollow")
+  
+})
+
+te
