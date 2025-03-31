@@ -16,6 +16,10 @@ const retriever = {
   get: jest.fn()
 }
 
+const followingStorer = {
+  store: jest.fn()
+}
+
 const consolelogMock = jest.fn()
 const getCurrentTimestampMock = jest.fn();
 
@@ -24,6 +28,7 @@ const runner = App.create({
   consolelog: consolelogMock,
   storer,
   retriever,
+  followingStorer,
   getCurrentTimestamp: getCurrentTimestampMock
 })
 
@@ -77,4 +82,16 @@ test("Retrieves messages by user when command is only one word (user)", () => {
 
     expect(storer.store).not.toHaveBeenCalled()
     expect(retriever.get).toHaveBeenCalledWith(user)
+})
+
+test('Stores the following user when command contains "follows"', () => {
+    const command = "user follows userToFollow"
+    when(readlineMock.createInterface().question)
+      .calledWith(">", expect.anything())
+      .mockReturnValue("user follows userToFollow")
+
+    runner.processCommand(command)
+
+    expect(followingStorer.store).toHaveBeenCalledWith("user", "userToFollow")
+    
 })
