@@ -6,11 +6,17 @@ module.exports = {
   
   function _create (dependencies = {}) {
     const {
-        consolelog = console.log
+        consolelog = console.log,
+        getCurrentTimestamp = Date.now
     } = dependencies
   
     function print(messages) {
-        consolelog(`${messages[0].message} - ${messages[0].timestamp}`)
+      const currentTime = getCurrentTimestamp();
+      const messageTime = messages[0].timestamp;
+      const diffInMs = currentTime - messageTime;
+      const diffInMinutes = Math.floor(diffInMs / (60 * 1000));
+
+        consolelog(`${messages[0].message} (${diffInMinutes} minutes ago)`)
         return messages
 
     }
