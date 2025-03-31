@@ -18,3 +18,15 @@ test('Stores followed user', () => {
 
 })
 
+
+test('Stores a new user to follow', () => {
+    const userAlreadyStored = "user"
+    const followedUserAlreadyStore  = "followedUser"
+    const newFollowedUserToStore = "anotherFollowedUser"
+    following[userAlreadyStored] = [followedUserAlreadyStore];
+
+    storer.store(userAlreadyStored, newFollowedUserToStore)
+
+    const expectedFollowingStored = following[userAlreadyStored]
+    expect(expectedFollowingStored).toMatchObject([followedUserAlreadyStore, newFollowedUserToStore])
+})

@@ -12,7 +12,10 @@ function _create (dependencies = {}) {
     } = dependencies
   
   function store(user, followedUser) {
-    following[user] = [followedUser]
+    if (!following[user]) {
+        following[user] = [];
+      }
+    following[user].push(followedUser)
   }
   
   return { 
