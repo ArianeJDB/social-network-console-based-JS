@@ -6,10 +6,12 @@ module.exports = {
   
   function _create (dependencies = {}) {
     const {
+        consolelog = console.log
     } = dependencies
   
     function print(messages) {
-      return messages
+        consolelog(`${messages[0].message} - ${messages[0].timestamp}`)
+        return messages
 
     }
     
