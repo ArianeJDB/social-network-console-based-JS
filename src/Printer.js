@@ -10,8 +10,8 @@ module.exports = {
         getCurrentTimestamp = Date.now
     } = dependencies
   
-    function print(messages) {
-        const currentTime = getCurrentTimestamp();
+    function print(messages, user) {
+        const currentTime = getCurrentTimestamp()
         messages.forEach(({message, timestamp}) => {
           const diffInMinutes = Math.floor((currentTime - timestamp) / (60 * 1000));
           const timeText =
@@ -20,8 +20,9 @@ module.exports = {
           : diffInMinutes === 1
           ? "1 minute ago"
           : `${diffInMinutes} minutes ago`;
-
-          consolelog(`${message} (${timeText})`);
+          
+          const prefix = user ? `${user} - ` : "";
+          consolelog(`${prefix}${message} (${timeText})`);
         })
 
         return messages
