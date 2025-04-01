@@ -13,13 +13,13 @@ module.exports = {
         printer = Printer.create()
     } = dependencies
     
-    function get(user) {
-      const userMessages = messages[user];
-      if (userMessages) {
-          printer.print(userMessages);
-      }
-      return userMessages || [];
+    function get(user, shouldPrint = true) {
+      const userMessages = messages[user] || []
+      if (shouldPrint && userMessages.length > 0) {
+        printer.print(userMessages)
+    }
 
+      return userMessages
     }
     
     return { 

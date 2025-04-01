@@ -9,43 +9,46 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-test("Returns messages by user", () => {
+test("Returns messages by user without printing when shouldPrint is false", () => {
     const user = "user"
     const message = "message"
     const timestamp = 1234567890
     putMessageByUser({user, message, timestamp})
 
-    const result = retriever.get(user)
+    const result = retriever.get(user, false)
 
     expect(result).toMatchObject([{message, timestamp}])
 
 })
 
-test("Prints one message by user", () => {
+test("Returns and prints one message by user when shouldPrint is true (default)", () => {
     const user = "user"
     const message = "message"
     const timestamp = 1234567890
-    putMessageByUser({user, message, timestamp})
+    putMessageByUser({ user, message, timestamp })
 
-    retriever.get(user)
+    const result = retriever.get(user);
 
-    expect(printer.print).toHaveBeenCalledWith([{message, timestamp}])
-
+    expect(result).toMatchObject([{ message, timestamp }]);
+    expect(printer.print).toHaveBeenCalledWith([{ message, timestamp }])
 })
 
-test("Prints more than one message by user", () => {
+test("Returns and prints multiple messages by user when shouldPrint is true (default)", () => {
     const user = "user"
     const message = "message"
     const timestamp = 1234567890
     const anotherMessage = "anotherMessage"
     const anotherTimestamp = 1234567896
-
     putMessageByUser({user, message, timestamp})
     putMessageByUser({user, message: anotherMessage, timestamp: anotherTimestamp})
 
 
-    retriever.get(user)
+    const result = retriever.get(user)
 
+    expect(result).toMatchObject([
+        { message, timestamp },
+        { message: anotherMessage, timestamp: anotherTimestamp }
+    ]);
     expect(printer.print).toHaveBeenCalledWith(
         [
             {message, timestamp},
@@ -57,10 +60,10 @@ test("Prints more than one message by user", () => {
 test("Does not print messages by user when user does not exist", () => {
     const user = "unkownUser"
 
-    retriever.get(user)
+    const result = retriever.get(user)
 
+    expect(result).toMatchObject([]);
     expect(printer.print).not.toHaveBeenCalled()
-
 })
 
 function putMessageByUser({user, message, timestamp}) {
