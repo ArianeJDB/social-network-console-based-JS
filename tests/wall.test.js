@@ -54,12 +54,12 @@ test("Prints and return both own and following messages in descending order by t
     const result = wall.process(user)
 
     const expectedMessages = [
-        { message: "another message", timestamp: lastTimestamp },
-        { message: "yet other message", timestamp: thirdTimestamp },
-        { message: "message", timestamp: secondTimestamp },
-        { message: "other message", timestamp: firstTimestamp }
-    ]
+        { message: "another message", timestamp: lastTimestamp, user: userFollowing },
+        { message: "yet other message", timestamp: thirdTimestamp, user: anotherUserFollowing },
+        { message: "message", timestamp: secondTimestamp, user: userFollowing },
+        { message: "other message", timestamp: firstTimestamp, user: user }
+    ];
     expect(result).toMatchObject(expectedMessages)
-    expect(printer.print).toHaveBeenCalledWith(expectedMessages, user)
+    expect(printer.print).toHaveBeenCalledWith(expectedMessages);
 
 })

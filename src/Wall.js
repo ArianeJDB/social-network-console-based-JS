@@ -17,13 +17,15 @@ function _create (dependencies = {}) {
     } = dependencies
   
   function process(user) {
-    const ownMessages = retriever.get(user, false)
+    const ownMessages = retriever.get(user, false).map(msg => ({ ...msg, user }))
     const followingUsers = followingRetriever.get(user)
-    const followingMessages = followingUsers.flatMap(user => retriever.get(user, false))
+    const followingMessages = followingUsers.flatMap(user =>
+      retriever.get(user, false).map(msg => ({ ...msg, user })) 
+    );
     const allMessages = [...ownMessages, ...followingMessages]
     const messagesSorted = allMessages.sort((a, b) => b.timestamp - a.timestamp)
 
-    printer.print(messagesSorted, user)
+    printer.print(messagesSorted)
 
     return messagesSorted
   } 
