@@ -9,13 +9,18 @@ const followingRetriever = {
     get: jest.fn()
 }
 
+const printer = {
+    print: jest.fn()
+}
+
 const wall = Wall.create({
     retriever,
-    followingRetriever
+    followingRetriever,
+    printer
 })
 
 
-test("returns both own and following messages in descending order by timestamp", () => {
+test("Prints and return both own and following messages in descending order by timestamp", () => {
     const user = "user"
     const userFollowing = "userFollowing"
     const anotherUserFollowing = "anotherUserFollowing"
@@ -55,5 +60,6 @@ test("returns both own and following messages in descending order by timestamp",
         { message: "other message", timestamp: firstTimestamp }
     ]
     expect(result).toMatchObject(expectedMessages)
+    expect(printer.print).toHaveBeenCalledWith(expectedMessages)
 
 })
