@@ -15,9 +15,13 @@ function _create (dependencies = {}) {
     } = dependencies
   
   function process(user) {
+    const ownMessages = retriever.get(user)
     const followingUsers = followingRetriever.get(user)
 
-    return followingUsers.flatMap(user => retriever.get(user))
+    const followingMessages = followingUsers.flatMap(user => retriever.get(user))
+    const allMessages = [...ownMessages, ...followingMessages]
+
+    return allMessages
   } 
   
   return { 
