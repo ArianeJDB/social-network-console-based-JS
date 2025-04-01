@@ -60,6 +60,6 @@ test("Prints and return both own and following messages in descending order by t
         { message: "other message", timestamp: firstTimestamp }
     ]
     expect(result).toMatchObject(expectedMessages)
-    expect(printer.print).toHaveBeenCalledWith(expectedMessages)
+    expect(printer.print).toHaveBeenCalledWith(expectedMessages, user)
 
 })

@@ -23,7 +23,7 @@ function _create (dependencies = {}) {
     const allMessages = [...ownMessages, ...followingMessages]
     const messagesSorted = allMessages.sort((a, b) => b.timestamp - a.timestamp)
 
-    printer.print(messagesSorted)
+    printer.print(messagesSorted, user)
 
     return messagesSorted
   } 
