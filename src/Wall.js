@@ -1,4 +1,5 @@
 const {Retriever} = require('./Retriever');
+const { FollowingRetriever } = require('./FollowingRetriever')
 const globalMessages = require('./globalMessages');
 
 module.exports = {
@@ -9,11 +10,14 @@ module.exports = {
 
 function _create (dependencies = {}) {
     const {
-        retriever = Retriever.create()
+        retriever = Retriever.create(),
+        followingRetriever = FollowingRetriever.create()
     } = dependencies
   
   function process(user) {
-    return retriever.get(user)
+    const followingUsers = followingRetriever.get(user)
+
+    return followingUsers.flatMap(user => retriever.get(user))
   } 
   
   return { 
