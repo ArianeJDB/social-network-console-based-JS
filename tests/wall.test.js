@@ -15,19 +15,23 @@ const wall = Wall.create({
 })
 
 
-test("returns both own and following messages", () => {
+test("returns both own and following messages in descending order by timestamp", () => {
     const user = "user"
     const userFollowing = "userFollowing"
     const anotherUserFollowing = "anotherUserFollowing"
+    const lastTimestamp = 1743485204
+    const thirdTimestamp = 1743398804
+    const secondTimestamp = 1743312404
+    const firstTimestamp = 1743229604
     const messagesFromUserFollowing = [
-        {message: "message", timestamp: 123456789},
-        {message: "another message", timestamp: 123456790}
+        {message: "message", timestamp: secondTimestamp},
+        {message: "another message", timestamp: lastTimestamp}
     ]
     const ownMessages = [
-        {message: "other message", timestamp: 123456789}
+        {message: "other message", timestamp: firstTimestamp}
     ]
     const messagesFromAnotherUserFollowing = [
-        {message: "yet other message", timestamp: 123456790}
+        {message: "yet other message", timestamp: thirdTimestamp}
     ]
     when(followingRetriever.get)
         .calledWith(user)
@@ -45,10 +49,10 @@ test("returns both own and following messages", () => {
     const result = wall.process(user)
 
     const expectedMessages = [
-        {message: "other message", timestamp: 123456789},
-        {message: "message", timestamp: 123456789},
-        {message: "another message", timestamp: 123456790},
-        {message: "yet other message", timestamp: 123456790}
+        { message: "another message", timestamp: lastTimestamp },
+        { message: "yet other message", timestamp: thirdTimestamp },
+        { message: "message", timestamp: secondTimestamp },
+        { message: "other message", timestamp: firstTimestamp }
     ]
     expect(result).toMatchObject(expectedMessages)
 
